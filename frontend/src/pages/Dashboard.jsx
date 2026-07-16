@@ -53,15 +53,19 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8 flex justify-between items-center">
+      <div className="bg-white/80 backdrop-blur-md p-8 rounded-[2rem] shadow-sm border border-slate-200/60 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary-100/40 to-indigo-100/40 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome, {user.name}!</h1>
-          <p className="text-gray-500 capitalize">Role: {user.role}</p>
+          <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Welcome, {user.name}! 👋</h1>
+          <p className="text-slate-500 font-medium mt-1 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+            Role: <span className="capitalize">{user.role}</span>
+          </p>
         </div>
         {user.role === 'instructor' && (
           <Link 
             to="/create-course" 
-            className="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition font-medium"
+            className="bg-gradient-to-r from-primary-600 to-indigo-600 text-white px-8 py-3 rounded-xl shadow-lg shadow-primary-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all font-bold"
           >
             + Create New Course
           </Link>
@@ -100,35 +104,37 @@ const Dashboard = () => {
       </div>
 
       {user.role === 'student' && (
-        <div>
-          <h2 className="text-xl font-bold text-gray-800 mb-6">My Quiz Attempts</h2>
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6 tracking-tight">My Quiz Attempts</h2>
           {attempts.length === 0 ? (
-            <p className="text-gray-500">No quizzes attempted yet.</p>
+            <div className="bg-white/50 border border-slate-200 rounded-2xl p-8 text-center">
+              <p className="text-slate-500 font-medium">No quizzes attempted yet. Start learning!</p>
+            </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-gray-50 text-gray-600 border-b border-gray-200">
+                <table className="w-full text-left border-collapse">
+                  <thead className="bg-slate-50 text-slate-600 border-b border-slate-200">
                     <tr>
-                      <th className="px-6 py-3 font-medium">Quiz</th>
-                      <th className="px-6 py-3 font-medium">Course</th>
-                      <th className="px-6 py-3 font-medium">Score</th>
-                      <th className="px-6 py-3 font-medium">Date</th>
+                      <th className="px-6 py-4 font-bold text-sm tracking-wider uppercase">Quiz</th>
+                      <th className="px-6 py-4 font-bold text-sm tracking-wider uppercase">Course</th>
+                      <th className="px-6 py-4 font-bold text-sm tracking-wider uppercase">Score</th>
+                      <th className="px-6 py-4 font-bold text-sm tracking-wider uppercase">Date</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-slate-100">
                     {attempts.map(attempt => (
-                      <tr key={attempt._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-800 font-medium">{attempt.quiz?.title || 'Deleted Quiz'}</td>
-                        <td className="px-6 py-4 text-gray-500">{attempt.quiz?.course?.title || '-'}</td>
+                      <tr key={attempt._id} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="px-6 py-4 text-slate-800 font-bold">{attempt.quiz?.title || 'Deleted Quiz'}</td>
+                        <td className="px-6 py-4 text-slate-500 font-medium">{attempt.quiz?.course?.title || '-'}</td>
                         <td className="px-6 py-4">
-                          <span className={`px-2 py-1 rounded text-sm font-semibold ${
-                            (attempt.score / attempt.totalQuestions) >= 0.7 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'
+                          <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide ${
+                            (attempt.score / attempt.totalQuestions) >= 0.7 ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-orange-100 text-orange-700 border border-orange-200'
                           }`}>
                             {attempt.score} / {attempt.totalQuestions} ({Math.round(attempt.score/attempt.totalQuestions * 100)}%)
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-gray-500">{new Date(attempt.submittedAt).toLocaleDateString()}</td>
+                        <td className="px-6 py-4 text-slate-500 font-medium">{new Date(attempt.submittedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                       </tr>
                     ))}
                   </tbody>

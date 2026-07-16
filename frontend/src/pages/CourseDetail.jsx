@@ -53,25 +53,36 @@ const CourseDetail = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
-        <div className="p-8">
-          <div className="flex justify-between items-start mb-4">
-            <h1 className="text-3xl font-bold text-gray-900">{course.title}</h1>
-            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+      <div className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-white overflow-hidden mb-12 relative">
+        {/* Decorative subtle background for header */}
+        <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-primary-50/80 to-transparent pointer-events-none"></div>
+        
+        <div className="p-10 relative z-10">
+          <div className="flex justify-between items-start mb-6">
+            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">{course.title}</h1>
+            <span className="px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-sm font-bold shadow-sm whitespace-nowrap ml-4">
               {course.category}
             </span>
           </div>
-          <p className="text-gray-600 mb-6 whitespace-pre-line">{course.description}</p>
-          <div className="text-sm text-gray-500 mb-6">
-            Created by: <span className="font-medium text-gray-800">{course.instructor?.name}</span>
+          <p className="text-slate-600 mb-8 whitespace-pre-line text-lg leading-relaxed">{course.description}</p>
+          <div className="text-sm text-slate-500 mb-8 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center font-bold text-slate-700">
+              {(course.instructor?.name || 'U').charAt(0)}
+            </div>
+            <div>
+              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Instructor</p>
+              <p className="font-bold text-slate-800 text-base">{course.instructor?.name}</p>
+            </div>
           </div>
 
           {!canViewContent && user.role === 'student' && (
-            <div className="bg-gray-50 p-6 rounded-lg text-center border border-gray-100">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Enroll to access course content</h3>
+            <div className="bg-slate-50/80 backdrop-blur-md p-10 rounded-3xl text-center border border-slate-200 shadow-inner my-10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')] opacity-5"></div>
+              <h3 className="text-2xl font-extrabold text-slate-800 mb-4 relative z-10">Ready to start learning?</h3>
+              <p className="text-slate-500 mb-8 relative z-10">Enroll now to access all video lectures and quizzes.</p>
               <button 
                 onClick={handleEnroll}
-                className="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
+                className="relative z-10 bg-gradient-to-r from-primary-600 to-indigo-600 text-white px-10 py-4 rounded-2xl shadow-xl hover:shadow-primary-500/40 hover:-translate-y-1 transition-all font-bold text-lg"
               >
                 Enroll Now
               </button>
@@ -79,36 +90,43 @@ const CourseDetail = () => {
           )}
 
           {canViewContent && (
-            <div>
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
               {user.role === 'student' && (
-                <div className="mb-6 inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
-                  ✓ You are enrolled
+                <div className="mb-8 inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-xl text-sm font-bold border border-green-200 shadow-sm">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  You are enrolled in this course
                 </div>
               )}
               
               {course.videoUrl ? (
-                <div className="mb-8 rounded overflow-hidden shadow bg-black aspect-video flex items-center justify-center">
-                  <video controls src={course.videoUrl} className="w-full h-full" />
+                <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl bg-slate-900 aspect-video flex items-center justify-center border-4 border-slate-800 group relative">
+                  <video controls src={course.videoUrl} className="w-full h-full object-cover" />
                 </div>
               ) : (
-                <div className="mb-8 bg-gray-100 p-8 text-center text-gray-500 rounded">
-                  No video available for this course.
+                <div className="mb-12 bg-slate-100 p-12 text-center text-slate-500 rounded-2xl border border-slate-200 border-dashed">
+                  <p className="font-medium text-lg">No video available for this course.</p>
                 </div>
               )}
 
-              <div className="mt-8 border-t pt-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Course Quizzes</h3>
+              <div className="mt-12 pt-10 border-t border-slate-200">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                    Q
+                  </div>
+                  <h3 className="text-2xl font-extrabold text-slate-900">Course Quizzes</h3>
+                </div>
+                
                 {quizzes.length === 0 ? (
-                  <p className="text-gray-500">No quizzes available yet.</p>
+                  <p className="text-slate-500 font-medium">No quizzes available yet.</p>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="grid gap-4">
                     {quizzes.map(quiz => (
-                      <div key={quiz._id} className="flex justify-between items-center p-4 border rounded hover:bg-gray-50">
-                        <span className="font-medium text-gray-800">{quiz.title}</span>
+                      <div key={quiz._id} className="flex justify-between items-center p-6 bg-white border border-slate-200 rounded-2xl hover:shadow-lg hover:border-primary-200 transition-all group">
+                        <span className="font-bold text-slate-800 text-lg group-hover:text-primary-600 transition-colors">{quiz.title}</span>
                         {user.role === 'student' && (
                           <Link 
                             to={`/quiz/${quiz._id}`}
-                            className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-1 rounded transition"
+                            className="bg-white border-2 border-primary-100 text-primary-600 font-bold hover:bg-primary-50 hover:border-primary-200 px-6 py-2.5 rounded-xl transition-all hover:shadow-sm"
                           >
                             Take Quiz
                           </Link>

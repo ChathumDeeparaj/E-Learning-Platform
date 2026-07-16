@@ -19,10 +19,14 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-slate-50 relative overflow-hidden flex flex-col font-sans text-slate-800">
+          {/* Decorative background blobs */}
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary-100/50 blur-[100px] pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/40 blur-[100px] pointer-events-none"></div>
+          
           <Navbar />
-          <Toaster position="top-right" />
-          <main className="flex-grow container mx-auto px-4 py-8">
+          <Toaster position="top-right" toastOptions={{ className: 'font-sans' }} />
+          <main className="flex-grow container mx-auto px-4 py-8 relative z-10">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

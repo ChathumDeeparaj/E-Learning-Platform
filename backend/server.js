@@ -22,7 +22,7 @@ app.use(express.json());
 // Rate Limiting for Auth
 const authLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5, // limit each IP to 5 requests per windowMs
+  max: process.env.NODE_ENV === 'production' ? 5 : 100, // 100 limit in dev for testing
   message: 'Too many login attempts from this IP, please try again after a minute',
 });
 app.use('/api/auth', authLimiter);

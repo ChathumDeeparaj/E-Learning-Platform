@@ -5,24 +5,35 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen -mt-8">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-24 text-center rounded-b-3xl shadow-lg px-4">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Learn Without Limits</h1>
-        <p className="text-xl md:text-2xl mb-10 text-blue-100 max-w-2xl mx-auto font-light">
-          Cloud-powered e-learning platform for the modern student. Master new skills with expert-led courses.
-        </p>
-        <Link 
-          to="/courses" 
-          className="bg-white text-blue-700 font-semibold px-8 py-4 rounded-full text-lg shadow-lg hover:bg-blue-50 hover:shadow-xl transition transform hover:-translate-y-1"
-        >
-          Browse Courses
-        </Link>
+      <section className="relative bg-gradient-to-br from-primary-700 via-primary-600 to-indigo-800 text-white py-32 text-center rounded-b-[3rem] shadow-2xl px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-50 animate-blob"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-50 animate-blob animation-delay-2000"></div>
+        
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-primary-100 text-sm font-semibold tracking-wide mb-6">
+            ✨ Welcome to the Future of Learning
+          </span>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight leading-tight">
+            Unlock Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-indigo-200">Potential</span>
+          </h1>
+          <p className="text-xl md:text-2xl mb-12 text-blue-100/90 font-light max-w-2xl mx-auto leading-relaxed">
+            Cloud-powered e-learning platform for the modern student. Master new skills with expert-led courses.
+          </p>
+          <Link 
+            to="/courses" 
+            className="inline-flex items-center gap-2 bg-white text-primary-700 font-bold px-10 py-4 rounded-full text-lg shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all hover:-translate-y-1"
+          >
+            Start Learning Now
+          </Link>
+        </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 max-w-6xl mx-auto">
+      <section className="py-24 px-4 max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose EduCloud?</h2>
-          <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+          <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Why Choose EduCloud?</h2>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-primary-500 to-indigo-500 mx-auto rounded-full"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
